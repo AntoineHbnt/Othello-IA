@@ -1,27 +1,9 @@
-import { Game } from "./game/game.js"
+import { new_game } from "./game/game.js"
+import { Human } from "./player/human.js"
 
-let game = new Game(
-    "p1",
-    "p2",
-    [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 3, 0, 0, 0, 0],
-        [0, 0, 3, 2, 1, 0, 0, 0],
-        [0, 0, 0, 1, 2, 3, 0, 0],
-        [0, 0, 0, 0, 3, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-    ],
-    [
-        [[3, 4], [4, 3]],
-        [[3, 3], [4, 4]]
-    ],
-    [
-        [[2, 3], [3, 2], [4, 5], [5, 4]],
-        []
-    ],
-    []
-)
+let player_1 = new Human("name1");
+let player_2 = new Human("name2");
+
+let game = new_game(player_1, player_2);
 
 console.log(game);
