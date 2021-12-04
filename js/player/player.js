@@ -4,6 +4,8 @@ class Player{
             throw new TypeError('Abstract class "Player" cannot be instantiated directly');
         }
         this.name = name;
+        this.piece_list = null;
+        this.playable_tile_list = null;
     }
 
     move(){

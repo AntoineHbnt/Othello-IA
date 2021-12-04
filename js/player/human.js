@@ -5,7 +5,7 @@ class Human extends Player {
         super(name);
     }
 
-    move(){
+    move(game, tile){
         
     }
 }

@@ -1,0 +1,29 @@
+.piece{
+    z-index: 99;
+    width: 65%;
+    height: 65%;
+    border-radius: 100%;
+    transition: .1s ease-in;
+    box-shadow: 3px 4px 2px 1px rgba(0, 0, 0, .3);
+    border: 1px solid rgba(0, 0, 0, .1);
+
+    &:hover{
+        transition: .05s ease-in;
+        transform: scale(1.05);
+    }
+
+    &.black{
+        background-color: $piece_color_1;
+        transition: color .1s linear;
+    }
+
+    &.white{
+        background-color: $piece_color_2;
+        transition: color .1s linear;
+    }
+}
+
+.none{
+    display: none;
+}
+
