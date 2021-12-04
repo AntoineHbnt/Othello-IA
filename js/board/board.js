@@ -59,23 +59,32 @@ class Board {
     }
 
     //Ajoute les evennement de click sur les cases jouable
-    add_tile_event() {
+    add_tile_event(player) {
         //Sélection de la div board
         const board_div = document.getElementById("board");
         //Sélection des cases jouables
         const tiles = document.getElementsByClassName("clickable");
 
-        function clickEvent(e) {
+        function clickEvent(e, board) {
             const X = Math.floor((e.y - board_div.getBoundingClientRect().top) / (board_div.clientWidth / 8));
             const Y = Math.floor((e.x - board_div.getBoundingClientRect().left) / (board_div.clientWidth / 8));
 
-            move(X, Y, board);
+            player.move(X, Y, board);
         }
 
         Array.from(tiles).forEach(tile => {
             //Ajout d'un évennement de 'click' sur les cases jouable
-            tile.addEventListener('click', (e) => clickEvent(e));
+            tile.addEventListener('click', (e) => clickEvent(e, this));
         });
+    }
+
+    add_piece(x,y,color){
+        let tile = this.tab[x][y];
+        console.log(color);
+        tile.playable = !this.playable;
+        tile.piece = color;
+        console.log(tile);
+        this.load_board();
     }
 }
 

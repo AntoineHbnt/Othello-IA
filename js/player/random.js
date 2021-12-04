@@ -1,8 +1,8 @@
 import { Player } from "./player.js"
 
 class Random extends Player {
-    constructor(){
-        super("random");
+    constructor(color){
+        super("random",color);
     }
 
     move(){

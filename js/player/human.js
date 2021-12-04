@@ -1,12 +1,13 @@
 import { Player } from "./player.js"
 
 class Human extends Player {
-    constructor(name){
-        super(name);
+    constructor(name, color){
+        super(name,color);
     }
 
-    move(game, tile){
-        
+    move(x,y,board){
+        console.log(board);
+        board.add_piece(x,y,this.color);
     }
 }
 

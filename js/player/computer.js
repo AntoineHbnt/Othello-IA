@@ -1,8 +1,8 @@
 import { Player } from "./player.js"
 
 class Computer extends Player {
-    constructor(name){
-        super(name);
+    constructor(name, color){
+        super(name, color);
     }
 
     move(){
