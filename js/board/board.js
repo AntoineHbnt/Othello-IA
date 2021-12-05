@@ -69,7 +69,7 @@ class Board {
             const X = Math.floor((e.y - board_div.getBoundingClientRect().top) / (board_div.clientWidth / 8));
             const Y = Math.floor((e.x - board_div.getBoundingClientRect().left) / (board_div.clientWidth / 8));
 
-            player.move(X, Y, board);
+            board.add_piece(X, Y, player.color);
         }
 
         Array.from(tiles).forEach(tile => {
@@ -78,13 +78,44 @@ class Board {
         });
     }
 
-    add_piece(x,y,color){
+    add_piece(x, y, color) {
         let tile = this.tab[x][y];
-        console.log(color);
         tile.playable = !this.playable;
         tile.piece = color;
-        console.log(tile);
-        this.load_board();
+        this.update_piece(x, y, color);
+    }
+
+    update_piece(x, y, color) {
+        let tile = this.tab[x][y]
+
+        function direction_search(i, j, tile_x, tile_y, board) {
+            let temp = [];
+            let tile_test = board.tab[tile_x][tile_y];
+            if (tile_test.piece != tile.piece && tile_test.piece != null) {
+                temp.push(tile_test);
+                direction_search(i, j, tile_x + i, tile_y + j, board);
+            }
+            else if (!tile_test.piece != null) return []
+            return temp;
+        }
+
+        function switch_piece(tile_list) {
+            tile_list.forEach((t) => {
+                t.piece = color;
+            })
+        }
+
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                if ((x + i <= 8) && (x + i >= 0) && (x + j <= 8) && (x + j >= 0)) {
+                    let tile_test = this.tab[x + i][y + j];
+                    if (tile_test.piece != tile.piece && tile_test.piece != null) {
+                        switch_piece(direction_search(i, j, x + i, y + j, this));
+                    }
+                }
+            }
+        }
+        this.load_board()
     }
 }
 

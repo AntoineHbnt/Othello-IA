@@ -5,6 +5,7 @@ class Player{
         }
         this.name = name;
         this.color = color;
+        this.move_list = [];
         this.piece_list = null;
         this.playable_tile_list = null;
     }
