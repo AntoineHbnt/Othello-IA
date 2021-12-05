@@ -40,7 +40,7 @@ function new_game(player_1, player_2) {
     board.draw_board();
     board.load_board();
     if (player_1 instanceof Human)
-        board.add_tile_event(player_1);
+        board.add_tile_event(player_1, player_2);
 
     player_1.piece_list = [board.tab[3][4], board.tab[4][3]];
     player_1.playable_tile_list = [board.tab[2][3], board.tab[3][2], board.tab[4][5], board.tab[5][4]];

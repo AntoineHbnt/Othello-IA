@@ -59,7 +59,7 @@ class Board {
     }
 
     //Ajoute les evennement de click sur les cases jouable
-    add_tile_event(player) {
+    add_tile_event(actual_player, next_player) {
         //Sélection de la div board
         const board_div = document.getElementById("board");
         //Sélection des cases jouables
@@ -69,7 +69,7 @@ class Board {
             const X = Math.floor((e.y - board_div.getBoundingClientRect().top) / (board_div.clientWidth / 8));
             const Y = Math.floor((e.x - board_div.getBoundingClientRect().left) / (board_div.clientWidth / 8));
 
-            board.add_piece(X, Y, player.color);
+            board.add_piece(X, Y, actual_player, next_player);
         }
 
         Array.from(tiles).forEach(tile => {
@@ -78,14 +78,30 @@ class Board {
         });
     }
 
-    add_piece(x, y, color) {
+
+
+    add_piece(x, y, actual_player, next_player) {
         let tile = this.tab[x][y];
-        tile.playable = !this.playable;
-        tile.piece = color;
-        this.update_piece(x, y, color);
+
+        function update_piece_list() {
+            actual_player.piece_list.push(tile);
+
+            actual_player.playable_tile_list.forEach((t) => {
+                t.playable = false;
+            });
+
+            actual_player.playable_tile_list = [];
+        }
+
+        actual_player.move_list.push([x, y]);
+        tile.playable = false;
+        tile.piece = actual_player.color;
+
+        update_piece_list();
+        this.update_piece(x, y, actual_player, next_player);
     }
 
-    update_piece(x, y, color) {
+    update_piece(x, y, actual_player, next_player) {
         let tile = this.tab[x][y]
 
         function direction_search(i, j, tile_x, tile_y, board) {
@@ -101,8 +117,13 @@ class Board {
 
         function switch_piece(tile_list) {
             tile_list.forEach((t) => {
-                t.piece = color;
-            })
+                t.piece = actual_player.color;
+                actual_player.piece_list.push(t);
+                let index = next_player.piece_list.indexOf(t)
+                if ( index > -1) {
+                    next_player.piece_list.splice(index, 1);
+                }
+            });
         }
 
         for (let i = -1; i <= 1; i++) {
@@ -115,6 +136,7 @@ class Board {
                 }
             }
         }
+        
         this.load_board()
     }
 }

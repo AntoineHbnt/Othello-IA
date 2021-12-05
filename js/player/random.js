@@ -5,9 +5,7 @@ class Random extends Player {
         super("random",color);
     }
 
-    move(){
-        
-    }
+
 }
 
 export { Random }
