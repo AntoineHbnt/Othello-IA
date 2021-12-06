@@ -5,6 +5,10 @@ class Computer extends Player {
         super(name, color);
     }
 
+    move(game){
+        
+    }
+
 }
 
 export { Computer }

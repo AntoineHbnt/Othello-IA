@@ -58,86 +58,109 @@ class Board {
         }
     }
 
-    //Ajoute les evennement de click sur les cases jouable
-    add_tile_event(actual_player, next_player) {
-        //Sélection de la div board
-        const board_div = document.getElementById("board");
-        //Sélection des cases jouables
-        const tiles = document.getElementsByClassName("clickable");
-
-        function clickEvent(e, board) {
-            const X = Math.floor((e.y - board_div.getBoundingClientRect().top) / (board_div.clientWidth / 8));
-            const Y = Math.floor((e.x - board_div.getBoundingClientRect().left) / (board_div.clientWidth / 8));
-
-            board.add_piece(X, Y, actual_player, next_player);
-        }
-
-        Array.from(tiles).forEach(tile => {
-            //Ajout d'un évennement de 'click' sur les cases jouable
-            tile.addEventListener('click', (e) => clickEvent(e, this));
-        });
-    }
-
-
-
-    add_piece(x, y, actual_player, next_player) {
+    //ajoute une piece sur le plateau
+    add_piece(x, y, player) {
         let tile = this.tab[x][y];
 
         function update_piece_list() {
-            actual_player.piece_list.push(tile);
+            player.piece_list.push(tile);
 
-            actual_player.playable_tile_list.forEach((t) => {
+            player.playable_tile_list.forEach((t) => {
                 t.playable = false;
             });
 
-            actual_player.playable_tile_list = [];
+            player.playable_tile_list = [];
         }
 
-        actual_player.move_list.push([x, y]);
+        player.move_list.push([x, y]);
         tile.playable = false;
-        tile.piece = actual_player.color;
+        tile.piece = player.color;
 
         update_piece_list();
-        this.update_piece(x, y, actual_player, next_player);
+        this.update_piece(x, y, player);
     }
 
-    update_piece(x, y, actual_player, next_player) {
-        let tile = this.tab[x][y]
+    //Met a jour les éléments du plateau suite a l'ajout d'une piece
+    update_piece(x, y, player) {
+        let board = this;
 
-        function direction_search(i, j, tile_x, tile_y, board) {
+        function direction_search(tile_x, tile_y, i, j) {
             let temp = [];
-            let tile_test = board.tab[tile_x][tile_y];
-            if (tile_test.piece != tile.piece && tile_test.piece != null) {
-                temp.push(tile_test);
-                direction_search(i, j, tile_x + i, tile_y + j, board);
+            while (true) {
+                temp.push(board.tab[tile_x][tile_y]);
+                tile_x += i;
+                tile_y += j;
+                if ((tile_x < 8) && (tile_x >= 0) && (tile_y < 8) && (tile_y >= 0)) {
+                    let tile_test = board.tab[tile_x][tile_y];
+                    if(tile_test.piece == board.tab[x][y].piece){
+                        return temp;
+                    }
+                } else {
+                    return [];
+                }
             }
-            else if (!tile_test.piece != null) return []
-            return temp;
         }
 
         function switch_piece(tile_list) {
             tile_list.forEach((t) => {
-                t.piece = actual_player.color;
-                actual_player.piece_list.push(t);
-                let index = next_player.piece_list.indexOf(t)
-                if ( index > -1) {
-                    next_player.piece_list.splice(index, 1);
+                t.piece = player.color;
+                player.piece_list.push(t);
+                let index = player.opponent.piece_list.indexOf(t)
+                if (index > -1) {
+                    player.opponent.piece_list.splice(index, 1);
                 }
             });
         }
 
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
-                if ((x + i <= 8) && (x + i >= 0) && (x + j <= 8) && (x + j >= 0)) {
+                if ((x + i < 8) && (x + i >= 0) && (y + j < 8) && (y + j >= 0)) {
                     let tile_test = this.tab[x + i][y + j];
-                    if (tile_test.piece != tile.piece && tile_test.piece != null) {
-                        switch_piece(direction_search(i, j, x + i, y + j, this));
+                    if (tile_test.piece != this.tab[x][y].piece && tile_test.piece != null) {
+                        switch_piece(direction_search(tile_test.x, tile_test.y, i, j));
                     }
                 }
             }
         }
-        
+
         this.load_board()
+    }
+
+    find_playable(player) {
+        let board = this;
+
+        function direction_search(player_color, tile_x, tile_y, i, j) {
+            while (true) {
+                tile_x += i;
+                tile_y += j;
+                if ((tile_x < 8) && (tile_x >= 0) && (tile_y < 8) && (tile_y >= 0)) {
+                    let tile_test = board.tab[tile_x][tile_y];
+                    if(tile_test.piece == null){
+                        tile_test.playable = true;
+                        player.playable_tile_list.push(tile_test);
+                        return tile_test;
+                    }else if(tile_test.piece == player_color) return [];
+                } else {
+                    return [];
+                }
+            }
+        }
+
+        for (let tile of player.piece_list) {
+            let x = tile.x;
+            let y = tile.y;
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if ((x + i < 8) && (x + i >= 0) && (y + j < 8) && (y + j >= 0)) {
+                        let tile_test = this.tab[x + i][y + j];
+                        if (tile_test.piece != tile.piece && tile_test.piece != null) {
+                            direction_search(tile.piece, tile.x+i, tile.y+j, i, j);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
 
