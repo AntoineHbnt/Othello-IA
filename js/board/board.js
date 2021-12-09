@@ -7,6 +7,17 @@
  * permission of HUBINET Antoine
  *******************************************************/
 
+ function containsTile(obj, list) {
+    var i;
+    for (let e of list) {
+        if (obj.x == e.x && obj.y == e.y) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 class Board {
     constructor(tab) {
         this.tab = tab;
@@ -87,7 +98,7 @@ class Board {
         function direction_search(tile_x, tile_y, i, j) {
             let temp = [];
             while (true) {
-                temp.push(board.tab[tile_x][tile_y]);
+                if(!containsTile(board.tab[tile_x][tile_y], temp)) temp.push(board.tab[tile_x][tile_y]);
                 tile_x += i;
                 tile_y += j;
                 if ((tile_x < 8) && (tile_x >= 0) && (tile_y < 8) && (tile_y >= 0)) {
@@ -116,7 +127,7 @@ class Board {
             for (let j = -1; j <= 1; j++) {
                 if ((x + i < 8) && (x + i >= 0) && (y + j < 8) && (y + j >= 0)) {
                     let tile_test = this.tab[x + i][y + j];
-                    if (tile_test.piece != this.tab[x][y].piece && tile_test.piece != null) {
+                    if (tile_test.piece != this.tab[x][y].piece && tile_test.piece != null && !(i==0 && j==0)) {
                         switch_piece(direction_search(tile_test.x, tile_test.y, i, j));
                     }
                 }
@@ -135,9 +146,10 @@ class Board {
                     let tile_test = board.tab[tile_x][tile_y];
                     if(tile_test.piece == null){
                         tile_test.playable = true;
-                        player.playable_tile_list.push(tile_test);
+                        if(!containsTile(tile_test, player.playable_tile_list)) player.playable_tile_list.push(tile_test);
                         return tile_test;
-                    }else if(tile_test.piece == player_color) return [];
+                    }
+                    else if(tile_test.piece == player_color) return [];
                 } else {
                     return [];
                 }
@@ -150,7 +162,7 @@ class Board {
                 for (let j = -1; j <= 1; j++) {
                     if ((x + i < 8) && (x + i >= 0) && (y + j < 8) && (y + j >= 0)) {
                         let tile_test = this.tab[x + i][y + j];
-                        if (tile_test.piece != tile.piece && tile_test.piece != null) {
+                        if (tile_test.piece != tile.piece && tile_test.piece != null && !(i==0 && j==0)) {
                             direction_search(tile.piece, tile.x+i, tile.y+j, i, j);
                         }
                     }

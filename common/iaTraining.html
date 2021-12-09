@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Othello</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="test-settings">
+        <div id="title">
+            <h2>Paramétrage</h2>
+            <h3>Test de l'intéligence artificielle</h5>
+        </div>
+        <div class="input">
+            <label for="">Profondeur de recherche de l'ia</label>
+            <input id="depth" type="number">
+        </div>
+        <div class="input">
+            <label for="">Nombre de partie</label>
+            <input id="nb_match" type="number">
+        </div>
+        <div id="send">
+            <button id="validate">Valider</button>
+            <button>Annuler</button>
+        </div>
+    </div>
+    <div id="avancement">
+        <h2>Simulation</h2>
+        <div class="bar-div">
+            <label for="">Avancement match en cour</label>
+            <div class="bar">
+                <div id="match" class="fill"></div>
+            </div>
+        </div>
+        <div class="bar-div">
+            <label for="">Avancement général</label>
+            <div class="bar">
+                <div id="gen" class="fill"></div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

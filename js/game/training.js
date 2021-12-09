@@ -2,15 +2,21 @@ import { Computer } from '../player/computer'
 import { Random } from '../player/random'
 
 class Training {
-    constructor(nb_game){
+    constructor(nb_game, depth){
         this.actual_player = player_1;
         this.player_1 = new Computer;
         this.player_2 = new Random;
-        this.board = new_board();
+        this.game_id = 1;
         this.nb_game = nb_game;
+        this.depth = depth;
+        this.board = new_board();
+        this.ia_vic = 0;
+        this.random_vic = 0;
+        this.egalite = 0;
     }
 
     play(){
+        if(this.game_id == 1) console.log("lancement de la simulation");
         if (this.actual_player.playable_tile_list.length != 0) {
             this.actual_player.move(this);
             this.move_id++;
@@ -28,8 +34,27 @@ class Training {
         this.play()
     }
 
+    score_update(){
+        if (this.player_1.piece_list.length > this.player_2.piece_list.length) {
+            this.ia_vic += 1;
+        }else if(this.player_1.piece_list.length < this.player_2.piece_list.length){
+            this.random_vic += 1;
+        }else this.egalite += 1;
+        console.log("IA : "+this.ia_vic+" Random : "+this.random_vic+" Egalite : "+this.egalite);
+    }
+
     end() {
         console.log("partie terminée");
+        this.score_update();
+        if(this.game_id < this.nb_game){
+            this.nb_game += 1;
+            this.actual_player = this.player_1;
+            this.board = this.new_board()
+            this.play();
+        }else{
+            console.log("Simulation terminé");
+        }
+        
     }
 
     player_tab_init(board) {
@@ -64,11 +89,10 @@ class Training {
 
         let board = new Board(tab);
 
-        board.draw_board();
-        board.load_board();
-
         this.player_tab_init(board);
 
         return board;
     }
 }
+
+export {Training}

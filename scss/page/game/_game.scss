@@ -1,0 +1,8 @@
+@import './board/piece';
+@import './board/tile';
+
+#board{
+    canvas{
+        border-radius: 25px;
+    }
+}
