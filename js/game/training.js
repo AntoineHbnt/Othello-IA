@@ -1,18 +1,16 @@
-import { Board } from '../board/board.js'
-import { Tile } from '../board/tile.js'
-import { Sim } from '../player/sim.js'
+import { Computer } from '../player/computer'
+import { Random } from '../player/random'
 
-class Game {
-    constructor(player_1, player_2, board, move_id) {
-
+class Training {
+    constructor(nb_game){
         this.actual_player = player_1;
-        this.player_1 = player_1;
-        this.player_2 = player_2;
-        this.board = (board != null)? board: this.new_board();
-        this.move_id = (move_id != null)? move_id : -1;
+        this.player_1 = new Computer;
+        this.player_2 = new Random;
+        this.board = new_board();
+        this.nb_game = nb_game;
     }
 
-    play() {
+    play(){
         if (this.actual_player.playable_tile_list.length != 0) {
             this.actual_player.move(this);
             this.move_id++;
@@ -26,7 +24,6 @@ class Game {
     }
 
     change_player() {
-        if (!(this.actual_player instanceof Sim)) this.board.load_board()
         this.actual_player = this.actual_player.opponent
         this.play()
     }
@@ -36,7 +33,7 @@ class Game {
     }
 
     player_tab_init(board) {
-
+        
         this.player_1.piece_list = [board.tab[3][4], board.tab[4][3]];
         this.player_1.playable_tile_list = [board.tab[2][3], board.tab[3][2], board.tab[4][5], board.tab[5][4]];
 
@@ -75,5 +72,3 @@ class Game {
         return board;
     }
 }
-
-export { Game }

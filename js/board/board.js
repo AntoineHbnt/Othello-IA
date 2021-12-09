@@ -122,8 +122,6 @@ class Board {
                 }
             }
         }
-
-        this.load_board()
     }
 
     find_playable(player) {
@@ -145,7 +143,6 @@ class Board {
                 }
             }
         }
-
         for (let tile of player.piece_list) {
             let x = tile.x;
             let y = tile.y;
