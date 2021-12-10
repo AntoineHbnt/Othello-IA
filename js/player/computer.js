@@ -40,7 +40,7 @@ function game_clone(original_game) {
 
     let board_copy = new Board(tab_copy);
 
-    return new Game(p1_copy, p2_copy, board_copy, move_id_copy, p2_copy);
+    return new Game(p1_copy, p2_copy, board_copy, move_id_copy);
 }
 
 class Computer extends Player {
@@ -104,14 +104,9 @@ class Computer extends Player {
     move(game) {
         let game_copy = game_clone(game);
         let tile = this.minimax(game_copy, this.depth, -Infinity, Infinity, true);
-        /* game.board.add_piece(tile.x, tile.y, this);
+        game.board.add_piece(tile.x, tile.y, this);
         game.board.find_playable(this.opponent);
-        game.change_player(); */
-        window.setTimeout(() => {
-            game.board.add_piece(tile.x, tile.y, this);
-            game.board.find_playable(this.opponent);
-            game.change_player();
-        }, 800);
+        game.change_player(); 
 
     }
 

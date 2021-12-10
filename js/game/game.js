@@ -9,7 +9,7 @@ class Game {
         this.player_1 = player_1;
         this.player_2 = player_2;
         this.board = (board != null)? board: this.new_board();
-        this.move_id = (move_id != null)? move_id : -1;
+        this.move_id = (move_id != null)? move_id : 0;
     }
 
     play() {
@@ -26,22 +26,24 @@ class Game {
     }
 
     change_player() {
-        if (!(this.actual_player instanceof Sim)) this.board.load_board()
+        //if (!(this.actual_player instanceof Sim)) this.board.load_board()
         this.actual_player = this.actual_player.opponent
         this.play()
     }
 
     end() {
-        console.log("partie terminée");
+        //console.log("partie terminée");
     }
 
     player_tab_init(board) {
+
 
         this.player_1.piece_list = [board.tab[3][4], board.tab[4][3]];
         this.player_1.playable_tile_list = [board.tab[2][3], board.tab[3][2], board.tab[4][5], board.tab[5][4]];
 
         this.player_2.piece_list = [board.tab[3][3], board.tab[4][4]];
         this.player_2.playable_tile_list = []
+
 
     }
 
@@ -66,9 +68,6 @@ class Game {
         tab[5][4].playable = true;
 
         let board = new Board(tab);
-
-        board.draw_board();
-        board.load_board();
 
         this.player_tab_init(board);
 

@@ -1,22 +1,26 @@
-import { Computer } from '../player/computer'
-import { Random } from '../player/random'
+/* import { Computer } from '../player/computer.js'
+import { Random } from '../player/random.js'
+import { Tile } from '../board/tile.js'
+import { Board } from '../board/board.js'
 
 class Training {
-    constructor(nb_game, depth){
-        this.actual_player = player_1;
-        this.player_1 = new Computer;
-        this.player_2 = new Random;
+    constructor(nb_game, depth) {
+        this.player_1 = new Computer("black", depth);
+        this.player_2 = new Random("white");
+        this.actual_player = this.player_1;
+        this.player_1.opponent = this.player_2;
+        this.player_2.opponent = this.player_1
+        this.move_id = 1;
         this.game_id = 1;
         this.nb_game = nb_game;
         this.depth = depth;
-        this.board = new_board();
+        this.board = this.new_board();
         this.ia_vic = 0;
         this.random_vic = 0;
         this.egalite = 0;
     }
 
-    play(){
-        if(this.game_id == 1) console.log("lancement de la simulation");
+    play() {
         if (this.actual_player.playable_tile_list.length != 0) {
             this.actual_player.move(this);
             this.move_id++;
@@ -34,31 +38,31 @@ class Training {
         this.play()
     }
 
-    score_update(){
+    score_update() {
         if (this.player_1.piece_list.length > this.player_2.piece_list.length) {
             this.ia_vic += 1;
-        }else if(this.player_1.piece_list.length < this.player_2.piece_list.length){
+        } else if (this.player_1.piece_list.length < this.player_2.piece_list.length) {
             this.random_vic += 1;
-        }else this.egalite += 1;
-        console.log("IA : "+this.ia_vic+" Random : "+this.random_vic+" Egalite : "+this.egalite);
+        } else this.egalite += 1;
+        console.log("IA : " + this.ia_vic + " Random : " + this.random_vic + " Egalite : " + this.egalite);
     }
 
     end() {
-        console.log("partie terminée");
         this.score_update();
-        if(this.game_id < this.nb_game){
-            this.nb_game += 1;
+        if (this.game_id < this.nb_game) {
+            this.game_id += 1;
+            console.log(this.game_id);
             this.actual_player = this.player_1;
             this.board = this.new_board()
             this.play();
-        }else{
+        } else {
             console.log("Simulation terminé");
         }
-        
+
     }
 
     player_tab_init(board) {
-        
+
         this.player_1.piece_list = [board.tab[3][4], board.tab[4][3]];
         this.player_1.playable_tile_list = [board.tab[2][3], board.tab[3][2], board.tab[4][5], board.tab[5][4]];
 
@@ -95,4 +99,4 @@ class Training {
     }
 }
 
-export {Training}
+export { Training } */
