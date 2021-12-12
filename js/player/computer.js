@@ -49,12 +49,24 @@ class Computer extends Player {
         this.depth = depth;
     }
 
+    game_over(game){
+        if (game.actual_player.playable_tile_list.length != 0) {
+            return false
+        }
+        else {
+            game.board.find_playable(game.actual_player.opponent);
+            if (game.actual_player.opponent.playable_tile_list.length == 0){
+                return true
+            }
+            return false
+        }
+    }
 
 
     minimax(original_game, depth, alpha, beta, maximizing_player) {
         let index = 0;
 
-        if (depth == 0) {
+        if (depth == 0 || this.game_over(original_game)) {
             return this.evaluation(original_game)
         }
 
