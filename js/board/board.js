@@ -106,6 +106,7 @@ class Board {
                     if(tile_test.piece == board.tab[x][y].piece){
                         return temp;
                     }
+                    else if(tile_test.piece == null) return [];
                 } else {
                     return [];
                 }

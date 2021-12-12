@@ -29,16 +29,16 @@
             <input id="depth" type="number">
         </div>
         <div class="input">
-            <div>
+            <label for="">Nombre de partie</label>
+            <input id="nb_game" type="number">
+        </div>
+        <div class="input">
+            <div class="checkbox-container">
                 <input type="checkbox" id="alpha_beta_active" value="alpha_beta_active">
                 <label for="alpha_beta_active">Activer alpha beta</label>
             </div>
         </div>
-        <div class="input">
-            <label for="">Nombre de partie</label>
-            <input id="nb_game" type="number">
-        </div>
-
+        
         <div id="send">
             <button onclick="training();">Valider</button>
             <button>Annuler</button>
