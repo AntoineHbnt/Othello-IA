@@ -16,6 +16,8 @@ function training() {
     let game_id = 0;
     let nb_game = document.getElementById("nb_game").value;
     let depth = document.getElementById("depth").value;
+    let ia_type = document.getElementById("ia_type").value;
+    let alphabeta_active = document.getElementById("alpha_beta_active").checked
     let ia_vic = 0;
     let rand_vic = 0;
     let egalite = 0;
@@ -34,7 +36,7 @@ function training() {
         game_id += 1;
         progress_bar_update(nb_game,game_id)
 
-        let player_1 = new Computer("black", depth);
+        let player_1 = new Computer("black", depth, ia_type, alphabeta_active);
         let player_2 = new Random("white");
 
         player_1.opponent = player_2;

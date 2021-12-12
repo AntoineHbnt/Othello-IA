@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Othello</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <div id="test-settings">
         <div id="title">
@@ -14,13 +16,29 @@
             <h3>Test de l'intéligence artificielle</h5>
         </div>
         <div class="input">
+            <label for="">Choix de l'ia</label>
+            <select name="" id="ia_type">
+                <option value="1">Positionnelle</option>
+                <option value="2">Absolue</option>
+                <option value="3">Mobilité</option>
+                <option value="4">Mixte</option>
+            </select>
+        </div>
+        <div class="input">
             <label for="">Profondeur de recherche de l'ia</label>
             <input id="depth" type="number">
+        </div>
+        <div class="input">
+            <div>
+                <input type="checkbox" id="alpha_beta_active" value="alpha_beta_active">
+                <label for="alpha_beta_active">Activer alpha beta</label>
+            </div>
         </div>
         <div class="input">
             <label for="">Nombre de partie</label>
             <input id="nb_game" type="number">
         </div>
+
         <div id="send">
             <button onclick="training();">Valider</button>
             <button>Annuler</button>
@@ -39,4 +57,5 @@
     </div>
     <script type="module" src="../js/app.js"></script>
 </body>
+
 </html>

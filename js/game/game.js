@@ -9,7 +9,6 @@ function progress_bar_update(move_id){
 
 class Game {
     constructor(player_1, player_2, board, move_id, actual_player) {
-
         this.actual_player = (actual_player != null)? actual_player: player_1;
         this.player_1 = player_1;
         this.player_2 = player_2;

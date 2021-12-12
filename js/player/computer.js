@@ -44,18 +44,20 @@ function game_clone(original_game) {
 }
 
 class Computer extends Player {
-    constructor(color, depth) {
+    constructor(color, depth, strategie, alphabeta_active) {
         super("minimax", color);
         this.depth = depth;
+        this.strategie = strategie;
+        this.alphabeta_active = alphabeta_active;
     }
 
-    game_over(game){
+    game_over(game) {
         if (game.actual_player.playable_tile_list.length != 0) {
             return false
         }
         else {
             game.board.find_playable(game.actual_player.opponent);
-            if (game.actual_player.opponent.playable_tile_list.length == 0){
+            if (game.actual_player.opponent.playable_tile_list.length == 0) {
                 return true
             }
             return false
@@ -67,7 +69,16 @@ class Computer extends Player {
         let index = 0;
 
         if (depth == 0 || this.game_over(original_game)) {
-            return this.evaluation(original_game)
+            switch (this.strategie) {
+                case 1:
+                    return this.positionelle(original_game);
+                case 2:
+                    return this.absolu(original_game);
+                case 3:
+                    return this.mobilite(original_game);
+                default:
+                    return this.mixte(original_game);
+            }
         }
 
         if (maximizing_player) {
@@ -83,7 +94,7 @@ class Computer extends Player {
                     index = i;
                 }
                 alpha = Math.max(alpha, eval_result);
-                if (beta <= alpha) break;
+                if (this.alphabeta_active && beta <= alpha) break;
             }
             return (depth == this.depth) ? this.playable_tile_list[index] : max_eval;
         }
@@ -100,8 +111,8 @@ class Computer extends Player {
                     min_eval = eval_result;
                     index = i;
                 }
-                alpha = Math.max(alpha, eval_result);
-                if (beta <= alpha) break;
+                beta = Math.min(beta, eval_result);
+                if (this.alphabeta_active && beta <= alpha) break;
             }
             return (depth == this.depth) ? this.playable_tile_list[index] : min_eval;
         }
@@ -109,16 +120,53 @@ class Computer extends Player {
 
     }
 
-    evaluation(game) {
+    positionelle(game) {
+
+        let matrice = 
+        [
+            [500, -150, 30, 10, 10, 30, -150, 500],
+            [-150, -250, 0, 0, 0, 0, -250, -150],
+            [30, 0, 1, 2, 2, 1, 0, 30],
+            [10, 0, 2, 16, 16, 2, 0, 10],
+            [10, 0, 2, 16, 16, 2, 0, 10],
+            [30, 0, 1, 2, 2, 1, 0, 30],
+            [-150, -250, 0, 0, 0, 0, -250, -150],
+            [500, -150, 30, 10, 10, 30, -150, 500]
+        ];
+
+        function get_score(){
+            let score = 0;
+            for (let tile of game.actual_player.piece_list){
+                score += matrice[tile.x][tile.y];
+            }
+
+            return score
+        }
+
+        return get_score();
+    }
+
+    absolu(game) {
         return game.actual_player.piece_list.length
     }
+
+    mobilite(game) {
+        return game.actual_player.playable_tile_list.length
+    }
+
+    mixte(game){
+        if(game.move_id <= 20) return this.positionelle(game)
+        else if(game.move_id <= 44) return this.mobilite(game)
+        else return this.absolu(game)
+    }
+
 
     move(game) {
         let game_copy = game_clone(game);
         let tile = this.minimax(game_copy, this.depth, -Infinity, Infinity, true);
         game.board.add_piece(tile.x, tile.y, this);
         game.board.find_playable(this.opponent);
-        game.change_player(); 
+        game.change_player();
 
     }
 
