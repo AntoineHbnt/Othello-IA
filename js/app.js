@@ -3,8 +3,8 @@ import { Human } from "./player/human.js"
 import { Computer } from "./player/computer.js"
 import { Random } from "./player/random.js";
 
-function progress_bar_update(nb_match, match_id){
-    if(document.getElementById("gen")){
+function progress_bar_update(nb_match, match_id) {
+    if (document.getElementById("gen")) {
         console.log(match_id);
         let bar = document.getElementById("gen");
         bar.max = nb_match;
@@ -23,6 +23,10 @@ function training() {
     let egalite = 0;
 
     let start_time = performance.now()
+    let end_time;
+    let calcul_time;
+    let mean_calcul_time;
+    
 
     function score_update(game) {
         let nb_piece_p1 = game.player_1.piece_list.length;
@@ -34,7 +38,7 @@ function training() {
 
     function new_game() {
         game_id += 1;
-        progress_bar_update(nb_game,game_id)
+        progress_bar_update(nb_game, game_id)
 
         let player_1 = new Computer("black", depth, ia_type, alphabeta_active);
         let player_2 = new Random("white");
@@ -47,20 +51,35 @@ function training() {
         score_update(game);
     }
 
-    while(game_id < nb_game) {
+    while (game_id < nb_game) {
+
+        if (game_id % 100 == 0) {
+            end_time = performance.now()
+            calcul_time = Math.round(((end_time - start_time) / 1000) * 1000) / 1000
+            mean_calcul_time = Math.round((calcul_time / nb_game) * 1000) / 1000
+            console.log('\//////////!\\ FIN_SIMULATION //!\\\\\\\\\\\/');
+            console.log("Nombre de victoires :");
+            console.log("Ia : " + ia_vic + " ( " + (Math.round(((ia_vic / nb_game) * 100) * 100) / 100) + "% ) ");
+            console.log("Random : " + rand_vic + " ( " + (Math.round(((rand_vic / nb_game) * 100) * 100) / 100) + "% ) ");
+            console.log("Egalite : " + egalite + " ( " + (Math.round(((egalite / nb_game) * 100) * 100) / 100) + "% ) ");
+            console.log("------------");
+            console.log("Temp de calcul : " + calcul_time + "s");
+            console.log("Temps de calcul moyen d'une partie : " + mean_calcul_time + "s");
+        }
+
         new_game();
     }
-    let end_time = performance.now()
-    let calcul_time = Math.round(((end_time-start_time)/1000)*1000)/1000
-    let mean_calcul_time = Math.round((calcul_time/nb_game)*1000)/1000
+    end_time = performance.now()
+    calcul_time = Math.round(((end_time - start_time) / 1000) * 1000) / 1000
+    mean_calcul_time = Math.round((calcul_time / nb_game) * 1000) / 1000
     console.log('\//////////!\\ FIN_SIMULATION //!\\\\\\\\\\\/');
     console.log("Nombre de victoires :");
-    console.log("Ia : "+ia_vic+ " ( "+(Math.round(((ia_vic/nb_game)*100)*100)/100)+"% ) ");
-    console.log("Random : "+rand_vic+ " ( "+(Math.round(((rand_vic/nb_game)*100)*100)/100)+"% ) ");
-    console.log("Egalite : "+egalite+ " ( "+(Math.round(((egalite/nb_game)*100)*100)/100)+"% ) ");
+    console.log("Ia : " + ia_vic + " ( " + (Math.round(((ia_vic / nb_game) * 100) * 100) / 100) + "% ) ");
+    console.log("Random : " + rand_vic + " ( " + (Math.round(((rand_vic / nb_game) * 100) * 100) / 100) + "% ) ");
+    console.log("Egalite : " + egalite + " ( " + (Math.round(((egalite / nb_game) * 100) * 100) / 100) + "% ) ");
     console.log("------------");
-    console.log("Temp de calcul : "+calcul_time+"s");
-    console.log("Temps de calcul moyen d'une partie : "+mean_calcul_time+"s");
+    console.log("Temp de calcul : " + calcul_time + "s");
+    console.log("Temps de calcul moyen d'une partie : " + mean_calcul_time + "s");
 
 }
 
@@ -77,6 +96,6 @@ function app() {
     game.play();
 }
 
-if(document.getElementById("board")) app();
+if (document.getElementById("board")) app();
 
 window.training = training;
