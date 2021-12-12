@@ -57,11 +57,11 @@ function training() {
             end_time = performance.now()
             calcul_time = Math.round(((end_time - start_time) / 1000) * 1000) / 1000
             mean_calcul_time = Math.round((calcul_time / nb_game) * 1000) / 1000
-            console.log('\//////////!\\ FIN_SIMULATION //!\\\\\\\\\\\/');
+            console.log('\//////////!\\ FIN_SIMULATION ('+game_id+') //!\\\\\\\\\\\/');
             console.log("Nombre de victoires :");
-            console.log("Ia : " + ia_vic + " ( " + (Math.round(((ia_vic / nb_game) * 100) * 100) / 100) + "% ) ");
-            console.log("Random : " + rand_vic + " ( " + (Math.round(((rand_vic / nb_game) * 100) * 100) / 100) + "% ) ");
-            console.log("Egalite : " + egalite + " ( " + (Math.round(((egalite / nb_game) * 100) * 100) / 100) + "% ) ");
+            console.log("Ia : " + ia_vic + " ( " + (Math.round(((ia_vic / game_id) * 100) * 100) / 100) + "% ) ");
+            console.log("Random : " + rand_vic + " ( " + (Math.round(((rand_vic / game_id) * 100) * 100) / 100) + "% ) ");
+            console.log("Egalite : " + egalite + " ( " + (Math.round(((egalite / game_id) * 100) * 100) / 100) + "% ) ");
             console.log("------------");
             console.log("Temp de calcul : " + calcul_time + "s");
             console.log("Temps de calcul moyen d'une partie : " + mean_calcul_time + "s");
