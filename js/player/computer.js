@@ -24,14 +24,14 @@ function game_clone(original_game) {
 
     let tab_copy = board_clone()
 
-    let p1_piece_list = tile_list_clone(original_game.player_1.piece_list)
-    let p2_piece_list = tile_list_clone(original_game.player_2.piece_list)
-    let p1_playable_tile_list = tile_list_clone(original_game.player_1.playable_tile_list)
-    let p2_playable_tile_list = tile_list_clone(original_game.player_2.playable_tile_list)
+    let p1_piece_list = tile_list_clone(original_game.actual_player.piece_list)
+    let p2_piece_list = tile_list_clone(original_game.actual_player.opponent.piece_list)
+    let p1_playable_tile_list = tile_list_clone(original_game.actual_player.playable_tile_list)
+    let p2_playable_tile_list = tile_list_clone(original_game.actual_player.opponent.playable_tile_list)
 
 
-    let p1_copy = new Sim("sim1", "black", p1_piece_list, p1_playable_tile_list);
-    let p2_copy = new Sim("sim2", "white", p2_piece_list, p2_playable_tile_list);
+    let p1_copy = new Sim("sim1", original_game.actual_player.color, p1_piece_list, p1_playable_tile_list);
+    let p2_copy = new Sim("sim2", original_game.actual_player.opponent.color, p2_piece_list, p2_playable_tile_list);
 
     p1_copy.opponent = p2_copy;
     p2_copy.opponent = p1_copy;

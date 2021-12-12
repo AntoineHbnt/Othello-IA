@@ -595,6 +595,9 @@
 }
 
 #avancement .bar-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   width: 100%;
   font-size: 12px;
   -webkit-box-orient: vertical;
@@ -618,7 +621,7 @@
   border-radius: 1px;
   background-color: #fff;
   height: 100%;
-  width: 100%;
+  width: 0%;
 }
 
 * {

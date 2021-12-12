@@ -92,6 +92,7 @@
     }
 
     .bar-div {
+        display: flex;
         width: 100%;
         font-size: 12px;
         flex-direction: column;
@@ -108,7 +109,7 @@
                 border-radius: 1px;
                 background-color: #fff;
                 height: 100%;
-                width: 100%;
+                width: 0%;
             }
         }
 

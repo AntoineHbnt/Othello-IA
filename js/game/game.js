@@ -2,6 +2,11 @@ import { Board } from '../board/board.js'
 import { Tile } from '../board/tile.js'
 import { Sim } from '../player/sim.js'
 
+function progress_bar_update(move_id){
+    let bar = document.getElementById("match");
+    bar.value = move_id;
+}
+
 class Game {
     constructor(player_1, player_2, board, move_id, actual_player) {
 
@@ -16,23 +21,25 @@ class Game {
         if (this.actual_player.playable_tile_list.length != 0) {
             this.actual_player.move(this);
             this.move_id++;
+            if(document.getElementById("match")) progress_bar_update(this.move_id)
         }
         else {
             this.board.find_playable(this.actual_player.opponent);
-            if (this.actual_player.opponent.playable_tile_list.length == 0)
+            if (this.actual_player.opponent.playable_tile_list.length == 0){
                 this.end();
+            }
             else this.change_player();
         }
     }
 
     change_player() {
-        //if (!(this.actual_player instanceof Sim)) this.board.load_board()
+        if (document.getElementById("board")) this.board.load_board()
         this.actual_player = this.actual_player.opponent
         this.play()
     }
 
     end() {
-        //console.log("partie terminée");
+        progress_bar_update(60);
     }
 
     player_tab_init(board) {
@@ -68,6 +75,11 @@ class Game {
         tab[5][4].playable = true;
 
         let board = new Board(tab);
+
+        if(document.getElementById("board")){
+            board.draw_board();
+            board.load_board();
+        }
 
         this.player_tab_init(board);
 

@@ -3,7 +3,14 @@ import { Human } from "./player/human.js"
 import { Computer } from "./player/computer.js"
 import { Random } from "./player/random.js";
 
-
+function progress_bar_update(nb_match, match_id){
+    if(document.getElementById("gen")){
+        console.log(match_id);
+        let bar = document.getElementById("gen");
+        bar.max = nb_match;
+        bar.value = match_id;
+    }
+}
 
 function training() {
     let game_id = 0;
@@ -23,6 +30,7 @@ function training() {
 
     function new_game() {
         game_id += 1;
+        progress_bar_update(nb_game,game_id)
 
         let player_1 = new Computer("black", depth);
         let player_2 = new Random("white");
@@ -45,16 +53,21 @@ function training() {
 
 function app() {
     let player_1 = new Human("name1", "black");
-    let player_2 = new Computer("white", 3);
+    let player_2 = new Computer("white", 4);
 
 
     player_1.opponent = player_2;
     player_2.opponent = player_1;
 
     let game = new Game(player_1, player_2);
+
+
+
     game.play();
+
 
 }
 
+if(document.getElementById("board")) app();
+
 window.training = training;
-window.app = app;
