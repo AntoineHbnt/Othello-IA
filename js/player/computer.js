@@ -49,6 +49,7 @@ class Computer extends Player {
         this.depth = depth;
         this.strategie = strategie;
         this.alphabeta_active = alphabeta_active;
+        this.nb_noeud = 0;
     }
 
     game_over(game) {
@@ -67,6 +68,7 @@ class Computer extends Player {
 
     minimax(original_game, depth, alpha, beta, maximizing_player) {
         let index = 0;
+        this.nb_noeud += 1;
 
         if (depth == 0 || this.game_over(original_game)) {
             switch (this.strategie) {
