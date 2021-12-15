@@ -17,6 +17,7 @@ function training() {
     let nb_game = document.getElementById("nb_game").value;
     let depth = document.getElementById("depth").value;
     let ia_type = document.getElementById("ia_type").value;
+    console.log(ia_type);
     let alphabeta_active = document.getElementById("alpha_beta_active").checked
     let ia_vic = 0;
     let rand_vic = 0;

@@ -72,11 +72,11 @@ class Computer extends Player {
 
         if (depth == 0 || this.game_over(original_game)) {
             switch (this.strategie) {
-                case 1:
+                case "1":
                     return this.positionelle(original_game);
-                case 2:
+                case "2":
                     return this.absolu(original_game);
-                case 3:
+                case "3":
                     return this.mobilite(original_game);
                 default:
                     return this.mixte(original_game);
